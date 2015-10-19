@@ -32,6 +32,13 @@ RUN curl --create-dirs -sSLo /usr/share/jenkins/slave.jar http://repo.jenkins-ci
 
 COPY jenkins-slave /usr/local/bin/jenkins-slave
 
+#USER root
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update && apt-get install -y python3-pip jshon npm maven2 && rm -rf /var/lib/apt/lists/*
+RUN ln -s /usr/bin/nodejs /usr/bin/node
+RUN pip3 install awscli
+
+
 VOLUME /home/jenkins
 WORKDIR /home/jenkins
 USER jenkins
